@@ -12,10 +12,6 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 
-# Create tables
-with app.app_context():
-    db.create_all()
-
 class Student(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), nullable=False)
@@ -23,6 +19,10 @@ class Student(db.Model):
     age = db.Column(db.Integer, nullable=False)
     course = db.Column(db.String(100), nullable=False)
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
+
+# Create tables after model definition
+with app.app_context():
+    db.create_all()
 
 @app.route('/')
 def index():
