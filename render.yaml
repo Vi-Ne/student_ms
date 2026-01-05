@@ -2,8 +2,10 @@ services:
   - type: web
     name: student-management
     env: python
+    plan: free
     buildCommand: "./build.sh"
     startCommand: "gunicorn app:app"
+    autoDeploy: true
     envVars:
       - key: DATABASE_URL
         fromDatabase:
@@ -15,5 +17,7 @@ services:
 
 databases:
   - name: student-db
+    plan: free
+    type: postgresql
     databaseName: student_management
     user: student_user
