@@ -11,7 +11,7 @@ services:
           property: connectionString
       - key: SECRET_KEY
         generateValue: true
-    autoDeploy: false
+
 
 databases:
   - name: student-db
