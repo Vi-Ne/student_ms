@@ -21,13 +21,25 @@ class Student(db.Model):
     created_at = db.Column(db.DateTime, default=datetime.utcnow)
 
 # Create tables after model definition
-with app.app_context():
-    db.create_all()
-
 @app.route('/')
 def index():
-    students = Student.query.all()
-    return render_template('index.html', students=students)
+    try:
+        # Ensure tables exist
+        db.create_all()
+        students = Student.query.all()
+        return render_template('index.html', students=students)
+    except Exception as e:
+        # If templates don't exist, return simple HTML
+        return f'''
+        <!DOCTYPE html>
+        <html>
+        <head><title>Student Management</title></head>
+        <body>
+            <h1>Student Management System</h1>
+            <p>No students found. <a href="/add">Add a student</a></p>
+        </body>
+        </html>
+        '''
 
 @app.route('/add', methods=['GET', 'POST'])
 def add_student():
