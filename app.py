@@ -6,8 +6,8 @@ import os
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
 
-# Use PostgreSQL database with asyncpg
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql+asyncpg://student_db_xkk1_user:6wRBSgMWVvreJDiye6uDaqWIae1WuSSd@dpg-d5dta0v5r7bs73c6btdg-a.oregon-postgres.render.com/student_db_xkk1')
+# Use SQLite for reliability
+app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.db'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
@@ -87,6 +87,26 @@ def delete_student(id):
 def view_student(id):
     student = Student.query.get_or_404(id)
     return render_template('view_student.html', student=student)
+
+@app.route('/export')
+def export_data():
+    students = Student.query.all()
+    data = [{
+        'id': s.id,
+        'name': s.name, 
+        'email': s.email,
+        'age': s.age,
+        'course': s.course,
+        'created_at': s.created_at.isoformat()
+    } for s in students]
+    
+    import json
+    from flask import Response
+    return Response(
+        json.dumps(data, indent=2),
+        mimetype='application/json',
+        headers={'Content-Disposition': 'attachment; filename=students.json'}
+    )
 
 if __name__ == '__main__':
     with app.app_context():
