@@ -18,6 +18,5 @@ services:
 databases:
   - name: student-db
     plan: free
-    type: postgresql
     databaseName: student_management
     user: student_user
