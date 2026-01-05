@@ -10,4 +10,4 @@ services:
       - key: SECRET_KEY
         generateValue: true
       - key: DATABASE_URL
-        value: postgresql://student_db_xkk1_user:6wRBSgMWVvreJDiye6uDaqWIae1WuSSd@dpg-d5dta0v5r7bs73c6btdg-a.oregon-postgres.render.com/student_db_xkk1
+        value: postgresql+asyncpg://student_db_xkk1_user:6wRBSgMWVvreJDiye6uDaqWIae1WuSSd@dpg-d5dta0v5r7bs73c6btdg-a.oregon-postgres.render.com/student_db_xkk1

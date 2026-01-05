@@ -6,8 +6,8 @@ import os
 app = Flask(__name__)
 app.config['SECRET_KEY'] = os.environ.get('SECRET_KEY', 'dev-secret-key')
 
-# Use PostgreSQL database
-app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql://student_db_xkk1_user:6wRBSgMWVvreJDiye6uDaqWIae1WuSSd@dpg-d5dta0v5r7bs73c6btdg-a.oregon-postgres.render.com/student_db_xkk1')
+# Use PostgreSQL database with asyncpg
+app.config['SQLALCHEMY_DATABASE_URI'] = os.environ.get('DATABASE_URL', 'postgresql+asyncpg://student_db_xkk1_user:6wRBSgMWVvreJDiye6uDaqWIae1WuSSd@dpg-d5dta0v5r7bs73c6btdg-a.oregon-postgres.render.com/student_db_xkk1')
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
