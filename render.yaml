@@ -16,3 +16,4 @@ databases:
   - name: student-db
     databaseName: student_management
     user: student_user
+    plan: free
